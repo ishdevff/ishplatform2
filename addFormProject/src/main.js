@@ -4,7 +4,7 @@ import { Client,Databases } from 'node-appwrite';
 export default async ({ req, res, log, error }) => {
   try {
       if (req.method === 'GET') {
-          return res.send('Function was updated'); //yyjjj
+          return res.send('Function was updated'); //yyjjjllll
       }
 
       if (req.method === 'POST') {
