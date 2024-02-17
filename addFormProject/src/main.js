@@ -24,7 +24,7 @@ export default async ({ req, res, log, error }) => {
     
             // Создаем документ в коллекции "projects"
             const projectDocument = {
-              //id: ID.unique(),
+              
               owner: userID,
               project_name: projectName,
             };
@@ -32,7 +32,7 @@ export default async ({ req, res, log, error }) => {
     
             // Создаем документ в коллекции "app form"
             const appFormDocument = {
-             // id: ID.unique(),
+             
               mainProject: projectResponse.$id,
               version: new Date().toLocaleDateString(),
             };
