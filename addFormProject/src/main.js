@@ -20,8 +20,7 @@ export default async ({ req, res, log, error }) => {
           const projectName = req.body.projectName;
 
           try {
-            //const userId = '65853190ed6fe6c8f58e'; // Замените на фактический ID пользователя
-            //const users = await databases.getDocument('6582ffb343b013e12898', userId);
+            
     
             // Создаем документ в коллекции "projects"
             const projectDocument = {
