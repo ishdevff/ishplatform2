@@ -18,6 +18,7 @@ export default async ({ req, res, log, error }) => {
           //const appFormID = req.body.appFormID;
           const userID = req.body.userID;
           const projectName = req.body.projectName;
+          const id = new Date().getTime().toString();
 
           try {
             
@@ -28,24 +29,24 @@ export default async ({ req, res, log, error }) => {
               owner: userID,
               project_name: projectName,
             };
-            const projectResponse = await databases.createDocument('6582ffb343b013e12898', '658302310aec81615ab7', ID.unique(),projectDocument);
+            const projectResponse = await databases.createDocument('6582ffb343b013e12898', '658302310aec81615ab7', id,projectDocument);
     
             // Создаем документ в коллекции "app form"
             const appFormDocument = {
              
-              mainProject: projectResponse.$id,
+              mainProject: id,
               version: new Date().toLocaleDateString(),
             };
-            const appFormResponse = await databases.createDocument('6582ffb343b013e12898', '659accc9e4dcac4bc9a1', ID.unique(),appFormDocument);
+            const appFormResponse = await databases.createDocument('6582ffb343b013e12898', '659accc9e4dcac4bc9a1', id,appFormDocument);
     
             // Обновляем документ в коллекции "projects" с добавлением значения в поле applicationFormID
             const updatedProjectDocument = {
-              applicationFormID: [appFormResponse.$id],
+              applicationFormID: [id],
             };
-            const updateProjectResponse = await databases.updateDocument('6582ffb343b013e12898', projectResponse.$id, updatedProjectDocument);
+            const updateProjectResponse = await databases.updateDocument('6582ffb343b013e12898', id, updatedProjectDocument);
     
             
-            const appFormID = appFormResponse.$id;
+            const appFormID = id;
             
             
             
