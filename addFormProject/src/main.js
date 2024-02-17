@@ -18,7 +18,7 @@ export default async ({ req, res, log, error }) => {
           //const appFormID = req.body.appFormID;
           const userID = req.body.userID;
           const projectName = req.body.projectName;
-          const id = new Date().getTime().toString(); //jjj
+          const id = new Date().getTime().toString(); //jj
 
           try {
             
