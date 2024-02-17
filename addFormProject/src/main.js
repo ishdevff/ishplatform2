@@ -19,7 +19,7 @@ export default async ({ req, res, log, error }) => {
 
           try {
               // Получаем все документы из коллекции "questions"
-              const questions = await databases.listDocuments('6582ffb343b013e12898', '659a6700a1ff01884885',1); //kимит 1 для отладки
+              const questions = await databases.listDocuments('6582ffb343b013e12898', '659a6700a1ff01884885'); //kимит 1 для отладки
               
               const createdDocuments = [];
 
@@ -34,6 +34,8 @@ export default async ({ req, res, log, error }) => {
 
                   const response = await databases.createDocument('6582ffb343b013e12898', '659aabc2d7db8029d9f8', ID.unique(), document);
                   createdDocuments.push(response);
+                // Завершаем цикл после первой итерации
+    break;
               }
 
               return res.json(createdDocuments);
