@@ -15,10 +15,45 @@ export default async ({ req, res, log, error }) => {
               .setKey(process.env.APPWRITE_API_KEY);
 
           const databases = new Databases(client);
-          const appFormID = req.body.appFormID;
+          //const appFormID = req.body.appFormID;
+          const userID = req.body.userID;
+          const projectName = req.body.projectName;
 
           try {
-              // Получаем все документы из коллекции "questions"
+            //const userId = '65853190ed6fe6c8f58e'; // Замените на фактический ID пользователя
+            //const users = await databases.getDocument('6582ffb343b013e12898', userId);
+    
+            // Создаем документ в коллекции "projects"
+            const projectDocument = {
+              id: ID.unique(),
+              owner: userID,
+              project_name: projectName,
+            };
+            const projectResponse = await databases.createDocument('6582ffb343b013e12898', '658302310aec81615ab7', projectDocument);
+    
+            // Создаем документ в коллекции "app form"
+            const appFormDocument = {
+              id: ID.unique(),
+              mainProject: projectResponse.$id,
+              version: new Date().toLocaleDateString(),
+            };
+            const appFormResponse = await databases.createDocument('6582ffb343b013e12898', '659accc9e4dcac4bc9a1', appFormDocument);
+    
+            // Обновляем документ в коллекции "projects" с добавлением значения в поле applicationFormID
+            const updatedProjectDocument = {
+              applicationFormID: [appFormResponse.$id],
+            };
+            const updateProjectResponse = await databases.updateDocument('6582ffb343b013e12898', projectResponse.$id, updatedProjectDocument);
+    
+            
+            const appFormID = appFormResponse.$id;
+            
+            
+            
+            
+            
+            
+            // Получаем все документы из коллекции "questions"
               const questions = await databases.listDocuments('6582ffb343b013e12898', '659a6700a1ff01884885'); //kимит 1 для отладки
               
               const createdDocuments = [];
