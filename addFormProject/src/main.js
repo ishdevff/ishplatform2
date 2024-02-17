@@ -1,33 +1,51 @@
 import { Client } from 'node-appwrite';
 
-// This is your Appwrite function
-// It's executed each time we get a request
+
 export default async ({ req, res, log, error }) => {
-  // Why not try the Appwrite SDK?
-  //
-  // const client = new Client()
-  //    .setEndpoint('https://cloud.appwrite.io/v1')
-  //    .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
-  //    .setKey(process.env.APPWRITE_API_KEY);
+  try {
+      if (req.method === 'GET') {
+          return res.send('Function was updated');
+      }
 
-  // You can log messages to the console
-  log('Hello, Logs! Test string');
+      if (req.method === 'POST') {
+          const client = new Client();
+          client
+              .setEndpoint('https://appwrite.simpatica.ru/v1')
+              .setProject(process.env.APPWRITE_FUNCTION_PROJECT_ID)
+              .setKey(process.env.APPWRITE_API_KEY);
 
-  // If something goes wrong, log an error
-  error('Hello, Errors!');
+          const databases = new Databases(client);
+          const appFormID = req.body.appFormID;
 
-  // The `req` object contains the request data
-  if (req.method === 'GET') {
-    // Send a response with the res object helpers
-    // `res.send()` dispatches a string back to the client
-    return res.send('Hello, World! Another account');
+          try {
+              // Получаем все документы из коллекции "questions"
+              const questions = await databases.listDocuments('6582ffb343b013e12898', '659a6700a1ff01884885',1); //kимит 1 для отладки
+              
+              const createdDocuments = [];
+
+              // Создаем связанный документ в коллекции "answers to questions" для каждого вопроса
+              for (const question of questions.documents) {
+                  const document = {
+                      applicationForm: appFormID,
+                      questionsID: question.$id,
+                      sectionID: question.sectionID,
+                      idInSection: question.idInSection,
+                  };
+
+                  const response = await databases.createDocument('6582ffb343b013e12898', '659aabc2d7db8029d9f8', ID.unique(), document);
+                  createdDocuments.push(response);
+              }
+
+              return res.json(createdDocuments);
+          } catch (error) {
+              console.log(error); // Log the error
+              return res.json({ 'status:': 500, 'error': 'Error creating documents' });
+          }
+      }
+  } catch (err) {
+      console.error('Unexpected error:', err);
+      return res.json({ 'status:': 500, 'error': 'Unexpected error' });
   }
-
-  // `res.json()` is a handy helper for sending JSON
-  return res.json({
-    motto: 'Build like a team of hundreds_',
-    learn: 'https://appwrite.io/docs',
-    connect: 'https://appwrite.io/discord',
-    getInspired: 'https://builtwith.appwrite.io',
-  });
 };
+
+
