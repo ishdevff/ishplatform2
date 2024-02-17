@@ -43,7 +43,7 @@ export default async ({ req, res, log, error }) => {
             const updatedProjectDocument = {
               applicationFormID: [id],
             };
-            const updateProjectResponse = await databases.updateDocument('6582ffb343b013e12898', id, updatedProjectDocument);
+           // const updateProjectResponse = await databases.updateDocument('6582ffb343b013e12898', id, updatedProjectDocument);
     
             
             const appFormID = id;
