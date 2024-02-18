@@ -73,8 +73,14 @@ export default async ({ req, res, log, error }) => {
                 // Завершаем цикл после первой итерации
     break;
               }
-
-              return res.json(createdDocuments);
+            //возвращаем ID созданных проекта и анкеты
+const resultDocument = {
+              
+              projectID: id,
+              appFormID: id,
+            };
+             // return res.json(createdDocuments);
+            return res.json(resultDocument);
           } catch (error) {
               console.log(error); // Log the error
               return res.json({ 'status:': 500, 'error': 'Error creating documents' });
