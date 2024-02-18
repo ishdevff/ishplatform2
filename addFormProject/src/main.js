@@ -4,7 +4,7 @@ import { Client, Databases, ID, Query } from 'node-appwrite'; //mjj
 export default async ({ req, res, log, error }) => {
   try {
       if (req.method === 'GET') {
-          return res.send('Function was updated'); //yhhhl
+          return res.send('Function was updated'); //yhh
       }
 
       if (req.method === 'POST') {
