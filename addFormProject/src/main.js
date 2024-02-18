@@ -71,7 +71,7 @@ export default async ({ req, res, log, error }) => {
                   const response = await databases.createDocument('6582ffb343b013e12898', '659aabc2d7db8029d9f8', ID.unique(), document);
                   createdDocuments.push(response);
                 // Завершаем цикл после первой итерации
-    break;
+   // break;
               }
             //возвращаем ID созданных проекта и анкеты
 const resultDocument = {
