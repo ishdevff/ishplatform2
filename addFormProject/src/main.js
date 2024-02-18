@@ -17,7 +17,7 @@ export default async ({ req, res, log, error }) => {
           const databases = new Databases(client);
           //const appFormID = req.body.appFormID;
           const userID = req.body.userID;
-          const projectName = req.body.projectName;
+          //const projectName = req.body.projectName;
           const id = new Date().getTime().toString(); //jj
 
           try {
@@ -27,7 +27,7 @@ export default async ({ req, res, log, error }) => {
             const projectDocument = {
               
               owner: userID,
-              project_name: projectName,
+              project_name: 'автоматически созданный проект ' + new Date().toLocaleDateString(),
             };
             const projectResponse = await databases.createDocument('6582ffb343b013e12898', '658302310aec81615ab7', id,projectDocument);
     
