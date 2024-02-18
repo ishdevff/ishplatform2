@@ -37,6 +37,7 @@ export default async ({ req, res, log, error }) => {
              
               mainProject: id,
               version: new Date().toLocaleDateString(),
+              progress: [0,0,0,0,0,0,0],
             };
             const appFormResponse = await databases.createDocument('6582ffb343b013e12898', '659accc9e4dcac4bc9a1', id,appFormDocument);
     
