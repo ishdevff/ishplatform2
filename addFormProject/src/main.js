@@ -27,8 +27,9 @@ export default async ({ req, res, log, error }) => {
             const projectDocument = {
               
               owner: userID,
-              project_name: 'автоматически созданный проект ' + new Date().toLocaleDateString(),
+              project_name: 'автоматически созданный проект ',
             };
+            // + new Date().toLocaleDateString()
             const projectResponse = await databases.createDocument('6582ffb343b013e12898', '658302310aec81615ab7', id,projectDocument);
     
             // Создаем документ в коллекции "app form"
